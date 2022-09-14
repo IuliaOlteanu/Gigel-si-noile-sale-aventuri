@@ -1,0 +1,75 @@
+Olteanu Iulia, 324CC
+
+1)Walsh
+    Dupa ce citesc din fisierul walsh.in datele de intrare apelez functia
+dei ce intoarce elementul corespunzator din matrice aflat pe pozitia (x, y).
+Functia dei primeste ca argumente dimensiunile matricei (1, n, 1, n), cele 2
+pozitii pentru care se doreste aflarea valorii elementului si un tip , initial 0.
+Matricea de dimensiune n x n am gandit-o ca fiind compusa din 4 submatrici, cadranul
+stanga sus, cadranul dreapta sus, cadranul stanga jos si cadranul dreapta jos. Primele 3
+matrici au elementele identice, iar matricea din coltul dreapta jos are elementele negate
+in comparatie cu celelalte submatrici. In functia dei, calculez linia de mijloc si coloana de mijloc
+pentru a putea incadra x si y. Prin urmare verific cum se afla x si y in raport cu linia de mijloc
+si coloana de mijloc in matricea initiala. Daca x <= linia de mijloc verific pozitia lui y 
+in raport cu coloana de mijloc.Daca sunt in cazul x <= lm && y <= cm , atunci ma aflu in coltul
+din stanga sus al matricei , iar daca x <= lm && y > cm sunt in coltul din dreapta sus al matricei.
+Apoi verific pozitia lui y in raport cu cm, stiind ca x > lm. Astfel, pot fi in coltul
+din stanga jos sau dreapta jos. Daca sunt in coltul din dreapta jos, elementele din acesta
+submatrice vor fi negate. Daca sunt in celelalte cadrane, nu este nevoie sa modific 
+valoarea lui t (ce poate fi 1 sau 0 in functie de matrice). Ma opresc din recursivitate
+cand am ajuns la o matrice de dimensiune 2 x 2 si verific cum este x si y in raport cu 
+linia de jos si coloana din dreapta a matricei(in acesta situatie elementul este negat fata de t) 
+    Complexitate temporala : O(k * n), la fiecare etapa se imparte matricea in 4 submatrici, 
+complexitatea spatiala este O(n).
+
+2)Statistics
+    Dupa citirea vectorului de cuvinte din fisierul statistics.in, parcurg literele matricei
+ale alfabetului si vectorul de cuvinte, calculand intr-un vector suma ponderea fiecarerei litere 
+dintr-un cuvant(de exemplu daca am litera 'b' si cuvantul este "abbc", ponderea literei 'b' in sir
+este -1 + 1 + 1 + (-1) = 0). Acest lucru se realizeaza in functia calcul_pondere, care intoarce 2 * numarul
+de aparitii ale unei litere intr-un cuvant dat - lungimea cuvantului. (am obtinut aceasta relatie 
+in urma efectuarii acestui algoritm pe mai multe cuvinte diferite cu litere distincte). 
+Apoi, m-am gandit sa sortez descrescator acest vector de sume, deoarece am nevoie sa stiu cate cuvinte
+respecta relatia din enunt(o litera este dominanta într-un sir daca numarul de aparitii ale acelei
+litere este strict mai mare decât jumatate din lungimea sirului). Pentru a verifica relatia din enunt
+a fost necesar sa calculez cate elemente din vectorul de sume au suma elementelor pozitiva(o alta idee la
+care m-am mai gandit ar fi fost sa calculez ponderea diferit, pentru fiecare litera sa calculez nr de aparitii
+intr-un cuvant si sa verific ca acest numar sa fie strict mai mare decat lungimea sirului / 2). 
+Rezultatul dorit este maximul din acest ultim vector(vectorul unde se afla lungimile).
+    Complexitate temporala : O(n*logn), care provine din sortarea vectorilor, complexitate spatiala : O(n).
+
+3)Prinel
+    Functia nr_op primeste ca argument vectorul target si intoarce un vector care contine pentru fiecare 
+element de la 1 pana la elementul maxim din target numarul de operatii corespunzator transformarii unui 
+numar din acest interval. Astfel, exista 2 cazuri de baza w[1] = 0 si w[2] = 1, apoi parcurg toate numerele de la 3 pana la 
+elementul maxim si pentru fiecare numar calculez toti divizorii. Daca am gasit un divizor, (ce respecta relatia
+div * div <= i) am nevoie si de ceilalti divizori(de exemplu daca n = 10 si am divizor 2, atunci am nevoie si
+de celalalt divizor 5 pentru a calcula numarul minim de operatii), am nevoie de divizorul care minimizeaza 
+numarul de operatii, motiv pentru care calculez min(w[i], min(w[i - j], w[i - l])). Initial, am implementat alt 
+algoritm pentru a determina nr minim de operatii pentru a transforma un numar pornind de la 1, prin alegerea divizorului
+cel mai mare intotdeauna si atunci cand nu puteam alege cel mai mare divizor, alegeam divizor / 2(de exemplu daca am numarul 77
+prin acest algoritm am 1 -> 2 -> 4 -> 8 -> 16 -> 32 -> 64 -> 72 -> 76 -> 77, obtinandu-se 10 operatii in final pentru a forma
+acest numar, insa mai exista o alta cale alegand alt divizor la un moment dat care minimizeaza numar de operatii necesare transformarii
+numarului : 1 -> 2 -> 4 -> 8 -> 16 -> 32 -> 64 -> 66 -> 77, avand 8 operatii in final)
+In main, dupa citirea datelor din fisierul de intrare, se aplica problema rucsacului, din laborator, deoarece 
+se cere determinarea profitului maxim (numar maxim de puncte acumulate).
+    Complexitate temporala : O(n*k), solutia presupune calcului iterativ a matricei dp, iar complexitatea 
+spatiala este O(n*k).
+
+4)Crypto
+    Pentru a determina relatiile de recurenta intre elementele matricei, am pornit de la problema clasica : de cate ori apare un
+sir ca subsecventa intr-un sir dat (https://www.geeksforgeeks.org/find-number-times-string-occurs-given-string/), dar in cazul de fata
+trebuie tratat diferit caracterul '?', deoarece in acesta situatie cand intalnesc '?' pot pune orice caracter, existand o potrivire sau nu. 
+Am construit matricea pentru programare dinamica (ce are dimensiunile (n + 1) x (l + 1)) astfel : (initial fiind toate elementele egale cu 0 
+si elementul de pe pozitia (0, 0) = 1) : pentru inceput am construit coloana 0 a matricei(daca in subsir am caracterul '?', atunci pot 
+sa potrivesc orice caracter, motiv pentru care acest element va fi numarul de caractere distincte din subsir inmultit cu elementul de pe linia de sus si
+ aceeasi coloana), in caz contrar ramane acelasi rezultat, calculat pentru linia de sus si coloana 0. Pe urma, parcurg cheia si subsirului si exista 2 cazuri : 
+- primul caz este atunci cand pe pozitia i am caracterul '?', existand situatiile de a potrivi nimic si de a potrivi caracterele de pe pozitia j pe pozitia
+i, motiv pentru care elementul de pe pozitia (i, j) d[i][j] = d[i - 1][j - 1] +  nr_caractere_distincte_subsir * d[i - 1][j]
+- al doilea caz este cel in care i este un caracter fixat din cheie, existand din nou 2 situatii de analizat : cazul in care caracterul de pe pozitia i - 1 din
+cheie este diferit de caracterul de pe pozitia j - 1 din subsir, caz in care d[i][j] = d[i - 1][j], pentru ca nu exista potrivire, si cazul in care cele 2 caractere
+sunt egale , adica se potrivesc si exista posibilitatea ori de a-l potrivi sau nu 
+* d[i][j] reprezinta raspunsul la intrebarea in cate moduri pot face match in primele i caractere din cheie cu primele j caractere din subsir.
+* i - caracterul de pe pozitia i din cheie
+* j - caracterul de pe pozitia j din subsir
+    Complexitate temporala : O(n*l), care provine din parcurgerea celor doua siruri de caractere (cheie si subsir), iar complexitatea spatiala este O(n*l).
